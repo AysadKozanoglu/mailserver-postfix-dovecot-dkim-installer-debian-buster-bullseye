@@ -1,7 +1,11 @@
 # mailserver installer 
 ## postfix 
+### preconfigured with mariadb as backend
 ## dovecot
+### preconfigured with mariadb as backend
 ## DKIM
+### dkim key generation for your DNS TXT record for dkim
+#### wait the finished output of the full installation
 
 automated shell installer script based on postfix dovecot DKIM support Debian buster 10
 
@@ -34,6 +38,7 @@ config/mailserver.config.source
 > info: change this variables for your need before you start installation
 
 ## Installation
+after you set your setting under mailserver.config.source above the installation will do everything for you automated
 ```
 cd mailserver_installer
 bash install_postfix_dovecot_dkim.sh
