@@ -77,3 +77,5 @@ i disabled pop service (noone need it)
 - implementing rspamd spamfilter
 - restricting postfix Sender policy against telnet spoofing
 - maybe implementing spmahaus RBLS ( i have to think about)
+- implementing DMARC with postfix Milter
+- implementing DKIM better way to postfix with Milter 
