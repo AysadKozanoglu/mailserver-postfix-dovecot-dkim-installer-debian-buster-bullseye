@@ -1,4 +1,10 @@
+
 # mailserver installer 
+#### distributions:
+- Debian stretch 9
+- Debian buster 10
+- Debian bullseye 11
+
 ## postfix 
 ### preconfigured with mariadb as backend
 ## dovecot
