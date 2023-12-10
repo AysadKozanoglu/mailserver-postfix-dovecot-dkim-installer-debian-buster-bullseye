@@ -1,0 +1,40 @@
+# sourcepart of main installer script
+#
+# postfix dovecot installer with dkim support
+#
+# Copyright 2023 Aysad Kozanoglu
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+installpkg(){
+    dpkg-query --status $1 >/dev/null || apt-get install -y $1
+}
+
+installPackages(){
+  apt update
+  installpkg mariadb-server
+  installpkg mariadb-client
+  debconf-set-selections <<< "postfix postfix/mailname string $DOMAIN"
+  debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
+  installpkg postfix
+  installpkg postfix-mysql
+  installpkg dovecot-core
+  installpkg dovecot-imapd
+  installpkg dovecot-pop3d
+  installpkg dovecot-lmtpd
+  installpkg dovecot-mysql
+  installpkg opendkim
+  installpkg opendkim-tools  
+}
+
