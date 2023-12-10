@@ -25,12 +25,11 @@
 ## check if config is customized
 
 
-exit 0
 # including config file
 source config/mailserver.config.source
 
 # check if config vars is customized to individual needs
-config/check.source
+source config/check.source
 
 export DEBIAN_FRONTEND=noninteractive
 
