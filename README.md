@@ -25,3 +25,23 @@ mailserver_installer
     ├── certbot.sh
     └── setup_dkim.sh
 ```
+
+## Configure for your need and set variables
+global config file for installer script
+```
+config/mailserver.config.source
+```
+> info: change this variables for your need before you start installation
+
+## Installation
+```
+cd mailserver_installer
+bash install_postfix_dovecot_dkim.sh
+```
+> info: installation take 4min (if you have a vps or vserver running with 2 core and 4 gb ram)
+
+###notice
+i disabled pop service (noone need it)
+
+### enjoy your mailserver
+:wq!
