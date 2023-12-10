@@ -1,0 +1,84 @@
+# sourcepart of main installer script
+#
+# postfix dovecot installer with dkim support
+#
+# Copyright 2023 Aysad Kozanoglu
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
+then
+    echo "Script is being run directly. please use main installer script or this script will fail fataly!"
+    exit 1
+fi
+
+postfixConfig(){
+  ##Configure postfix main.cf config
+  postconf smtpd_recipient_restrictions="permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination"
+  postconf smtpd_sasl_auth_enable=yes
+  postconf smtpd_sasl_path=private/auth
+  postconf smtpd_sasl_type=dovecot
+  postconf mydestination=localhost
+  postconf myhostname=`hostname`
+  postconf virtual_transport=lmtp:unix:private/dovecot-lmtp
+  
+  postconf virtual_mailbox_domains=mysql:/etc/postfix/mysql-virtual-mailbox-domains.cf
+  postconf virtual_mailbox_maps=mysql:/etc/postfix/mysql-virtual-mailbox-maps.cf
+  postconf virtual_alias_maps=mysql:/etc/postfix/mysql-virtual-alias-maps.cf
+  
+  #set IFS to blank so we preserve new lines in multiline strings
+  IFS=""
+  
+ echo "user = $DB_USER
+password = $DB_USER_PASS
+hosts = 127.0.0.1
+dbname = $DATABASE
+query = SELECT 1 FROM virtual_domains WHERE name='%s'" > /etc/postfix/mysql-virtual-mailbox-domains.cf
+  
+  
+  status=`postmap -q $DOMAIN mysql:/etc/postfix/mysql-virtual-mailbox-domains.cf`
+  if [ $status -ne 1 ]; then
+  	echo "Virtual Domains config failed."
+  fi
+  
+echo "user = $DB_USER
+password = $DB_USER_PASS
+hosts = 127.0.0.1
+dbname = $DATABASE
+query = SELECT 1 FROM virtual_users WHERE email='%s'" > /etc/postfix/mysql-virtual-mailbox-maps.cf
+  
+  
+  status=`postmap -q $EMAIL mysql:/etc/postfix/mysql-virtual-mailbox-maps.cf`
+  
+  status=`postmap -q mail.$DOMAIN mysql:/etc/postfix/mysql-virtual-mailbox-domains.cf`
+  if [ $status -ne 1 ]; then
+  	echo "Virtual users config failed."
+  fi
+  
+  echo "user = $DB_USER
+password = $DB_USER_PASS
+hosts = 127.0.0.1
+dbname = $DATABASE
+query = SELECT destination FROM virtual_aliases WHERE source='%s'" > /etc/postfix/mysql-virtual-alias-maps.cf
+  
+  
+  #master.cf config
+  postconf -M submission/inet="submission       inet       n       -       -       -       -       smtpd"
+  postconf -P submission/inet/syslog_name=postfix/submission
+  postconf -P submission/inet/smtpd_tls_security_level=may
+  postconf -P submission/inet/smtpd_sasl_auth_enable=yes
+  postconf -P submission/inet/smtpd_client_restrictions=permit_sasl_authenticated,reject  
+
+service postfix restart
+}
