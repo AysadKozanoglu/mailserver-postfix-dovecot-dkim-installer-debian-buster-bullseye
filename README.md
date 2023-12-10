@@ -5,7 +5,7 @@
 ### preconfigured with mariadb as backend
 ## DKIM
 ### dkim key generation for your DNS TXT record for dkim
-#### wait the finished output of the full installation
+#### wait the finished output of the full installation for the domain based DKIM TXT Record
 
 automated shell installer script based on postfix dovecot DKIM support Debian buster 10
 
