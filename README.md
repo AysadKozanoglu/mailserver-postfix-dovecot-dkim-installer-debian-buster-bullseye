@@ -45,7 +45,7 @@ bash install_postfix_dovecot_dkim.sh
 ```
 > info: installation take 4min (if you have a vps or vserver running with 2 core and 4 gb ram)
 
-###notice
+### notice
 i disabled pop service (noone need it)
 
 ### enjoy your mailserver
