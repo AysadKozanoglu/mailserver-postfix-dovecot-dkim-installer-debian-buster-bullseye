@@ -60,3 +60,13 @@ i disabled pop service (noone need it)
 
 ### Thanks to
 -  [Haisum Mussawir haisum](https://github.com/haisum)
+
+### todo
+- adding certbot to get ssl certificates for the domain and some default domains like:
+  - autodiscover
+  - subdomain imap
+  - subdomain smtp
+  - subdomain webmail
+- implementing rspamd spamfilter
+- restricting postfix Sender policy against telnet spoofing
+- maybe implementing spmahaus RBLS ( i have to think about)
