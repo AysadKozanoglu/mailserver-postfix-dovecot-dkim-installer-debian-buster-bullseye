@@ -6,6 +6,7 @@
 automated shell installer script based on postfix dovecot DKIM support Debian buster 10
 
 ### overview
+```
 mailserver_installer
 ├── config
 │   ├── dkim
@@ -23,3 +24,4 @@ mailserver_installer
 └── snips_old
     ├── certbot.sh
     └── setup_dkim.sh
+```
