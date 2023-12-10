@@ -25,7 +25,6 @@
 ## check if config is customized
 
 
-exit 0
 # including config file
 source config/mailserver.config.source
 
