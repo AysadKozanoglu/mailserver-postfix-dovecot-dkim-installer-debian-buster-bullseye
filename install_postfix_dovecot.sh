@@ -45,15 +45,17 @@ source config/postfix/config.source
 # including configure Dovecot
 source config/dovecot/config.source
 
+#DISABLED for better implementing
 # including configure dkim 
-source config/dkim/config.source
+#source config/dkim/config.source
 
 mainInstaller(){
   installPackages
   bootstrapdb
   postfixConfig
   dovecotConfig
-  dkimConfig
+# disabled for better implementing
+#  dkimConfig
 }
 
 mainInstaller
