@@ -54,6 +54,13 @@ bash install_postfix_dovecot_dkim.sh
 ### notice
 i disabled pop service (noone need it)
 
+### testing with email client
+- thunderbird autodiscover works fine if:
+  - set DNS A records to your mailserver ip
+    - imap, smtp, autodiscover 
+- screenshots of test
+  - [1 thunderbird emailclient](https://github.com/AysadKozanoglu/mailserver-postfix-dovecot-dkim-installer-debian-buster-bullseye/blob/main/emailClient_test_screenshots/thunderbird_autoconfig_test_success.png)
+  - [1 thunderbird emailclient](https://github.com/AysadKozanoglu/mailserver-postfix-dovecot-dkim-installer-debian-buster-bullseye/blob/main/emailClient_test_screenshots/thunderbird_autoconfig_check_success.png)
 ### enjoy your mailserver
 :wq!
 
