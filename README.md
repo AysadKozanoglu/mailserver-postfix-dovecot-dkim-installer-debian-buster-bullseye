@@ -63,9 +63,9 @@ i disabled pop service (noone need it)
 
 ### todo
 - adding certbot to get ssl certificates for the domain and some default domains like:
-  - autodiscover
-  - subdomain imap
-  - subdomain smtp
+  - subdomain autodiscover.      for autodiscover thunderbird and other mailclients
+  - subdomain imap.              for autodiscover thunderbirdand other mailclients
+  - subdomain smtp.              for autodiscover thunderbird and other mailclients
   - subdomain webmail
 - implementing rspamd spamfilter
 - restricting postfix Sender policy against telnet spoofing
