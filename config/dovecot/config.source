@@ -141,7 +141,7 @@ service dict {
   }
 }"
   echo $dovecotmaster > /etc/dovecot/conf.d/10-master.conf
-  echo "protocols = imap" > /etc/dovecot/conf.d/00-pop3-disable.conf
+  echo "protocols = imap lmtp" > /etc/dovecot/conf.d/00-pop3-disable.conf
   service dovecot restart
   service postfix restart
   echo -e "\n\nYour mail server should be accessible now.\n\n"
