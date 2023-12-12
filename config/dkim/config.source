@@ -76,8 +76,8 @@ EOF
   chown opendkim:opendkim /etc/opendkim/keys/$DOMAIN/default.private
   chmod 600 /etc/opendkim/keys/$DOMAIN/default.private
   echo -e "\n\n DKIM DNS Record Value for Domain  $DOMAIN \n\n"
-  cat /etc/opendkim/keys/$DOMAIN/default.txt  | sed -e 's/"//g;s/)//g;s/(//g;s/;//g;s/ //g' | sed 's/-----/\\n\\n/g'
-  echo -e "\n\n copy the line above 1:1 and add as TXT record to your Domain on your DNS Provider\n\n be sure to DELETE every whitespaces from above output\n\n"
+  cat /etc/opendkim/keys/$DOMAIN/default.txt
+  echo -e "\n\n Copy the line above 1:1 and add as TXT record to your Domain on your DNS Provider.\n\n Be sure to DELETE every whitespaces and double quotes \" from above output\n\n"
 
   systemctl restart opendkim
 
