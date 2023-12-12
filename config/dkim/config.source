@@ -27,6 +27,9 @@ dkimConfig(){
   gpasswd -a postfix opendkim
   mv /etc/opendkim.conf /etc/opendkim.conf.orig
 
+  mkdir /var/spool/postfix/opendkim
+  chown opendkim:postfix /var/spool/postfix/opendkim
+
   # create dkim config file
   cat << EOF > /etc/opendkim.conf
 Syslog yes
@@ -73,13 +76,13 @@ EOF
   chown opendkim:opendkim /etc/opendkim/keys/$DOMAIN/default.private
   chmod 600 /etc/opendkim/keys/$DOMAIN/default.private
   echo -e "\n\n DKIM DNS Record Value for Domain  $DOMAIN \n\n"
-  cat cat /etc/opendkim/keys/$DOMAIN/default.txt  | sed -e 's/"//g;s/)//g;s/(//g;s/;//g;s/ //g'
-  echo -e "\n\n copy the line above 1:1 and add as TXT record to your Domain on your DNS Provider\n\n "
+  cat /etc/opendkim/keys/$DOMAIN/default.txt  | sed -e 's/"//g;s/)//g;s/(//g;s/;//g;s/ //g' | sed 's/-----/\\n\\n/g'
+  echo -e "\n\n copy the line above 1:1 and add as TXT record to your Domain on your DNS Provider\n\n be sure to DELETE every whitespaces from above output\n\n"
 
   systemctl restart opendkim
 
-  echo -e '\n\n for testing  your dkim key for domain $DOMAIN:  enter following command in this console:\n\n
-opendkim-testkey -d $DOMAIN -s default -vvv | grep "key OK" --color\n\n'
+  echo -e "\n\n test  your dkim key for domain $DOMAIN:  enter following command in this console:\n\n
+opendkim-testkey -d $DOMAIN -s default -vvv | grep \"key OK\" --color\n\n"
 }
 
 
