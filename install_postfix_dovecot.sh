@@ -22,14 +22,14 @@
 # Script to install postfix dovecot DKIM
 #####
 
-## check if config is customized
-
+## check if current user is root
+source check/ifroot.source
 
 # including config file
 source config/mailserver.config.source
 
 # check if config vars is customized to individual needs
-source config/check.source
+source check/ifDefaultParams.source
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -45,17 +45,20 @@ source config/postfix/config.source
 # including configure Dovecot
 source config/dovecot/config.source
 
-#DISABLED for better implementing
 # including configure dkim 
-#source config/dkim/config.source
+source config/dkim/config.source
+
+# including postfix dkim configs
+source config/postfix/dkim_milter.source
 
 mainInstaller(){
   installPackages
   bootstrapdb
   postfixConfig
   dovecotConfig
-# disabled for better implementing
-#  dkimConfig
+  dkimConfig
+  postfixSenderRestConfig
+  postfixDkimConfig
 }
 
 mainInstaller

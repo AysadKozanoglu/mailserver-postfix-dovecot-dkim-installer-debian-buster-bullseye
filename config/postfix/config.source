@@ -36,7 +36,10 @@ postfixConfig(){
   postconf virtual_mailbox_domains=mysql:/etc/postfix/mysql-virtual-mailbox-domains.cf
   postconf virtual_mailbox_maps=mysql:/etc/postfix/mysql-virtual-mailbox-maps.cf
   postconf virtual_alias_maps=mysql:/etc/postfix/mysql-virtual-alias-maps.cf
-  
+  # be sure to set to every message unique message-id
+  postconf always_add_missing_headers=yes
+
+
   #set IFS to blank so we preserve new lines in multiline strings
   IFS=""
   
@@ -80,5 +83,5 @@ query = SELECT destination FROM virtual_aliases WHERE source='%s'" > /etc/postfi
   postconf -P submission/inet/smtpd_sasl_auth_enable=yes
   postconf -P submission/inet/smtpd_client_restrictions=permit_sasl_authenticated,reject  
 
-service postfix restart
+  systemctl restart postfix
 }
