@@ -24,29 +24,63 @@ then
 fi
 
 dkimConfig(){
-  # To add domains to OpenDKIM:
-  mkdir -p /etc/postfix/dkim/keys/$DOMAIN/
-  opendkim-genkey -r -D /etc/postfix/dkim/keys/$DOMAIN/ -d $DOMAIN
-  chgrp -R opendkim /etc/postfix/dkim/keys/$DOMAIN/
-  chmod -R g+r /etc/postfix/dkim/keys/$DOMAIN/
-  echo "default._domainkey.$DOMAIN $DOMAIN:default:/etc/postfix/dkim/keys/$DOMAIN/default.private" >> /etc/postfix/dkim/keytable
-  echo "*@$DOMAIN default._domainkey.$DOMAIN" >> /etc/postfix/dkim/signingtable
-  
-  for x in opendkim postfix; do
-    printf "Restarting %s..." "$x"
-    systemctl restart "$x" && printf " ...done\\n"
-  done
-  
-  pval="$(tr -d "\n" </etc/postfix/dkim/keys/$DOMAIN/default.txt | sed "s/k=rsa.* \"p=/k=rsa; p=/;s/\"\s*\"//;s/\"\s*).*//" | grep -o "p=.*")"
-  dkimentry="default._domainkey.$DOMAIN TXT v=DKIM1; k=rsa; $pval"
-  
-  echo -e "\n\n ADD THIS OUTPUT AS TXT RECORD for your maildomain on your DNS Provider"
-  echo -e " =========================================================================\n\n"
-  echo "$dkimentry"
-  echo -e "\n\n"
-  echo -e " ==>> output saved to /root/dkim_record_info   for further use"
-  
-  echo $dkimentry > /root/dkim_record_info
-  
-  # Put the output of that into dns at a TXT record for default._domainkey
+  gpasswd -a postfix opendkim
+  mv /etc/opendkim.conf /etc/opendkim.conf.orig
+
+  # create dkim config file
+  cat << EOF > /etc/opendkim.conf
+Syslog yes
+UMask 007                                                                                                                                                                   
+PidFile /var/run/opendkim/opendkim.pid
+OversignHeaders From
+Socket local:/var/spool/postfix/opendkim/opendkim.sock
+TrustAnchorFile /usr/share/dns/root.key
+UserID opendkim
+Canonicalization relaxed/simple
+Mode sv
+SubDomains no
+Nameservers 8.8.8.8,1.1.1.1
+KeyTable refile:/etc/opendkim/key.table
+SigningTable refile:/etc/opendkim/signing.table
+ExternalIgnoreList /etc/opendkim/trusted.hosts
+InternalHosts /etc/opendkim/trusted.hosts
+EOF
+
+  mkdir -p /etc/opendkim/keys
+  chown -R opendkim:opendkim /etc/opendkim
+  chmod go-rw /etc/opendkim/keys
+  echo "*@$DOMAIN      default._domainkey.$DOMAIN" > /etc/opendkim/signing.table
+  echo "*@*.$DOMAIN    default._domainkey.$DOMAIN" >> /etc/opendkim/signing.table
+  echo "default._domainkey.$DOMAIN     $DOMAIN:default:/etc/opendkim/keys/$DOMAIN/default.private" > /etc/opendkim/key.table
+
+  cat << EOF > /etc/opendkim/trusted.hosts
+127.0.0.1
+localhost
+.$DOMAIN
+EOF
+
+  cat << EOF > /etc/default/opendkim
+RUNDIR=/var/run/opendkim
+SOCKET="local:/var/spool/postfix/opendkim/opendkim.sock"
+USER=opendkim
+GROUP=opendkim
+PIDFILE=/var/run/opendkim/opendkim.pid
+EXTRAAFTER=
+EOF
+
+  mkdir /etc/opendkim/keys/$DOMAIN
+  opendkim-genkey -b 2048 -d $DOMAIN -D /etc/opendkim/keys/$DOMAIN -s default -v
+  chown opendkim:opendkim /etc/opendkim/keys/$DOMAIN/default.private
+  chmod 600 /etc/opendkim/keys/$DOMAIN/default.private
+  echo -e "\n\n DKIM DNS Record Value for Domain  $DOMAIN \n\n"
+  cat cat /etc/opendkim/keys/$DOMAIN/default.txt  | sed -e 's/"//g;s/)//g;s/(//g;s/;//g;s/ //g'
+  echo -e "\n\n copy the line above 1:1 and add as TXT record to your Domain on your DNS Provider\n\n "
+
+  systemctl restart opendkim
+
+  echo -e '\n\n for testing  your dkim key for domain $DOMAIN:  enter following command in this console:\n\n
+opendkim-testkey -d $DOMAIN -s default -vvv | grep "key OK" --color\n\n'
 }
+
+
+# opendkim-testkey -d $DOMAIN -s default -vvv
