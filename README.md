@@ -18,6 +18,9 @@ automated shell installer script based on postfix dovecot DKIM support Debian bu
 ### overview
 ```
 mailserver_installer
+├── check
+│   ├── ifDefaultParams.source
+│   └── ifroot.source
 ├── config
 │   ├── dkim
 │   │   └── config.source
@@ -27,13 +30,16 @@ mailserver_installer
 │   ├── mariadbBootstrap
 │   │   └── mariadbBootstrap.source
 │   └── postfix
-│       └── config.source
+│       ├── config.source
+│       ├── dkim_milter.source
+│       └── sender_spam_restrictions.source
+├── emailClient_test_screenshots
+│   ├── thunderbird_autoconfig_check_success.png
+│   └── thunderbird_autoconfig_test_success.png
 ├── install
 │   └── packages.source
-├── install_postfix_dovecot_dkim.sh
-└── snips_old
-    ├── certbot.sh
-    └── setup_dkim.sh
+├── install_postfix_dovecot.sh
+└── README.md
 ```
 
 ## Configure for your need and set variables
@@ -69,11 +75,9 @@ i disabled pop service (noone need it)
 -  [Haisum Mussawir haisum](https://github.com/haisum)
 
 ### todo
-- adding certbot to get ssl certificates for the domain and some default domains like:
-  - subdomain autodiscover.      for autodiscover thunderbird and other mailclients
-  - subdomain imap.              for autodiscover thunderbirdand other mailclients
-  - subdomain smtp.              for autodiscover thunderbird and other mailclients
-  - subdomain webmail
-- implementing rspamd spamfilter
-- restricting postfix Sender policy against telnet spoofing
-- maybe implementing spmahaus RBLS ( i have to think about)
+- [ ] adding certbot to get ssl certificates for the domain and some default domains like:
+- [ ] implementing rspamd spamfilter
+- [x] better dkim implementation for domain
+- [x] restriction postfix Sender policy against spammers / spoofing
+- [x] restriction postfix ehlo, helo against telnet spammers 
+- [ ] maybe implementing spmahaus RBLS ( i have to think about)
