@@ -72,8 +72,8 @@ i disabled pop service (noone need it)
 - [ ] adding certbot to get ssl certificates for the domain and some default domains
 - [ ] implementing rspamd spamfilter
 - [x] restricting postfix Sender policy against telnet spoofing
-- [ ] check if current user running sciprt is root
-- [ ] check default params for mailserver is changed by sysAd
+- [x] check if current user running sciprt is root
+- [x] check default params for mailserver is changed by sysAd
 - [ ] maybe implementing spmahaus RBLS ( i have to think about)
 - [ ] implementing DMARC with postfix Milter
 - [x] implementing DKIM better way to postfix with Milter 
