@@ -69,13 +69,11 @@ i disabled pop service (noone need it)
 -  [Haisum Mussawir haisum](https://github.com/haisum)
 
 ### todo
-- adding certbot to get ssl certificates for the domain and some default domains like:
-  - subdomain autodiscover.      for autodiscover thunderbird and other mailclients
-  - subdomain imap.              for autodiscover thunderbirdand other mailclients
-  - subdomain smtp.              for autodiscover thunderbird and other mailclients
-  - subdomain webmail
-- implementing rspamd spamfilter
-- restricting postfix Sender policy against telnet spoofing
-- maybe implementing spmahaus RBLS ( i have to think about)
-- implementing DMARC with postfix Milter
-- implementing DKIM better way to postfix with Milter 
+- [ ] adding certbot to get ssl certificates for the domain and some default domains
+- [ ] implementing rspamd spamfilter
+- [x] restricting postfix Sender policy against telnet spoofing
+- [ ] check if current user running sciprt is root
+- [ ] check default params for mailserver is changed by sysAd
+- [ ] maybe implementing spmahaus RBLS ( i have to think about)
+- [ ] implementing DMARC with postfix Milter
+- [x] implementing DKIM better way to postfix with Milter 
