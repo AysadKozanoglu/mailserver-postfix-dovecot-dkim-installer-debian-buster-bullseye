@@ -42,6 +42,10 @@ source config/mariadbBootstrap/mariadbBootstrap.source
 # including configure postfix
 source config/postfix/config.source
 
+
+# including seder restrictions
+source config/postfix/sender_spam_restrictions.source
+
 # including configure Dovecot
 source config/dovecot/config.source
 
