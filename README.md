@@ -1,5 +1,11 @@
 
 # mailserver installer 
+
+## passed and tested distributions
+ - ![](https://img.shields.io/badge/debian_9-stretch-green)
+ - ![](https://img.shields.io/badge/debian_10-buster-green)
+ - ![](https://img.shields.io/badge/debian_11-bullseye-green)
+   
 #### distributions:
 - Debian stretch 9
 - Debian buster 10
