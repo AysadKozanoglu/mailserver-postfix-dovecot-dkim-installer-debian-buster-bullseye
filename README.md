@@ -44,13 +44,13 @@ mailserver_installer
     nameserver 1.1.1.1
     ```
 - check your /etc/hosts
-  make sure hostname -f or hostnamectl status points to your root DOMAIN name.
+  make sure _hostname_ _-f_ or _hostnamectl_ _status_ points to your root DOMAIN name.
   hostnamectl status output should be like:
   ```
    Static hostname: mx1
    Transient hostname: mx1.emailbox.com.de
   ```
-  >info: otherwise on sending mail to other mailserverswhich implemented dkim, would fail (see var/log/mail.log)
+  >info: otherwise on sending mail to other mailservers which implemented dkim, would fail (see var/log/mail.log)
 
   ```
   127.0.0.1	localhost
