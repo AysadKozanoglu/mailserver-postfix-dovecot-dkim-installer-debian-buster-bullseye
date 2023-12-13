@@ -62,19 +62,21 @@ mailserver_installer
   ```
   >info: set your mailserver hostname: hostnamectl set-hostname mx1.emailbox.com.de OR hostname mx1.emailbox.com.de
 
-  for your vserver/decicated server add reverse dns on your vserver/decicated Host Proviver
+  - reverse: for your vserver/decicated server add reverse dns on your  Host Proviver for your server
   in this example reserve should be:
   ```
   mx1.emailbox.com.de
   ```  
-  add default subdomains A Records for your mailserver
-  this is helpful for email clients like thunderbird (and other) to autodiscover while configure new email acount setup
+  - autodiscover for emailclients
+  Add and point following default subdomains A Record for your mailserver
   ```
   imap.
   smtp.
   autodiscover.
   mail.
   ```
+  >info: this is helpful for email clients like thunderbird (and other) to autodiscover while configure new email acount setup
+  >
 ## Configure for your need and set variables
 global config file for installer script
 ```
