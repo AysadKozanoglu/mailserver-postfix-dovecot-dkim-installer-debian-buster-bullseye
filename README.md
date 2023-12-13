@@ -61,6 +61,12 @@ mailserver_installer
   <YOUR PUBLIC IP> emailbox.com.de imap.emailbox.com.de smtp.emailbox.com.de mail.emailbox.com.de
   ```
   >info: set your mailserver hostname: hostnamectl set-hostname mx1.emailbox.com.de OR hostname mx1.emailbox.com.de
+
+  for your vserver/decicated server add reverse dns on your vserver/decicated Host Proviver
+  in this example reserve should be:
+  ```
+  mx1.emailbox.com.de
+  ```  
   
 ## Configure for your need and set variables
 global config file for installer script
