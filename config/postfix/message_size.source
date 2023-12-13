@@ -17,11 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-postfixDkimConfig(){
-  postconf milter_default_action=accept
-  postconf milter_protocol=6
-  postconf smtpd_milters=local:opendkim/opendkim.sock
-  postconf non_smtpd_milters=\$smtpd_milters
+postfixMessageSizeConfig(){
+  # 100MB
+  postconf virtual_mailbox_limit=102400000
+
+# 50MB
+  postconf message_size_limit=47185920
 
   systemctl restart postfix
 }

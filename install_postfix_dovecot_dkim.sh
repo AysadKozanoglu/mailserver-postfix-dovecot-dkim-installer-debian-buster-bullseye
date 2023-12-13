@@ -42,9 +42,11 @@ source config/mariadbBootstrap/mariadbBootstrap.source
 # including configure postfix
 source config/postfix/config.source
 
-
 # including seder restrictions
 source config/postfix/sender_spam_restrictions.source
+
+# including message size config
+source config/postfix/message_size.source
 
 # including configure Dovecot
 source config/dovecot/config.source
@@ -62,6 +64,7 @@ mainInstaller(){
   dovecotConfig
   dkimConfig
   postfixSenderRestConfig
+  postfixMessageSizeConfig
   postfixDkimConfig
 }
 

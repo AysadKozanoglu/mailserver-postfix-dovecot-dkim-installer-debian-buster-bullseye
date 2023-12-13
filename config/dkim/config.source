@@ -79,10 +79,10 @@ EOF
   cat /etc/opendkim/keys/$DOMAIN/default.txt
   echo -e "\n\n Copy the line above 1:1 within ().  goto your DNS provider and  add  new TXT record for subdomain default._domainkey  default._domainkey.$DOMAIN \n\n Be sure to DELETE every whitespaces and double quotes \" from above output\n\n"
 
-  systemctl restart opendkim
-
   echo -e "\n\n test  your dkim key for domain $DOMAIN:  enter following command in this console:\n\n
 opendkim-testkey -d $DOMAIN -s default -vvv | grep \"key OK\" --color\n\n"
+
+  systemctl restart opendkim
 }
 
 
