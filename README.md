@@ -45,8 +45,11 @@ mailserver_installer
     ```
 - check your /etc/hosts
   make sure _hostname_ _-f_ or _hostnamectl_ _status_ points to your root DOMAIN name.
+  
   hostnamectl status output should be like:
   ```
+  # hostnamectl status
+  
    Static hostname: mx1
    Transient hostname: mx1.emailbox.com.de
   ```
