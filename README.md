@@ -67,7 +67,14 @@ mailserver_installer
   ```
   mx1.emailbox.com.de
   ```  
-  
+  add default subdomains A Records for your mailserver
+  this is helpful for email clients like thunderbird (and other) to autodiscover while configure new email acount setup
+  ```
+  imap.
+  smtp.
+  autodiscover.
+  mail.
+  ```
 ## Configure for your need and set variables
 global config file for installer script
 ```
